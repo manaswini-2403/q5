@@ -1,19 +1,18 @@
 pipeline {
-    agent any 
+    agent any
 
     stages {
         stage('Build') {
             steps {
                 script {
-                    // Build your Docker image
-                    bat 'docker build -t my-nodejs-app .'
+                    // Explicitly call cmd.exe
+                    bat 'cmd /c docker build -t my-nodejs-app .'
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    // Run tests here if you have any
                     echo 'Running tests...'
                 }
             }
@@ -21,8 +20,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Deploy your Docker image
-                    echo 'Deploying application...'
+                    bat 'cmd /c docker run -d -p 3000:3000 --name my-nodejs-container my-nodejs-app'
                 }
             }
         }
